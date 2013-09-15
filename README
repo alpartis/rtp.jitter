@@ -1,0 +1,21 @@
+project:    rtp.jitter
+owner:      alpartis@thundernet.com
+license:    MIT open source
+
+Coding style/standards guidelines are important.  The standards that 
+will be enforced are summarized as follows:
+
+1. indent with 4 spaces (no tabs allowed)
+2. Unix line endings
+3. NO Hungarian notation
+   
+With exceptions noted above, standards for this project follow much 
+of Linux kernel and Google guidelines:
+                         
+    https://www.kernel.org/doc/Documentation/CodingStyle
+    http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml
+
+ helpful commentary on this topic:
+
+    http://www.linuxjournal.com/article/5780
+    http://thundernet.com/alanpartis/articles/standards.shtml
