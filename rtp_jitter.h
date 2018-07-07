@@ -20,57 +20,6 @@
 *      TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 *      SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 *
-*   -----
-*
-*   jitter buffer for RTP packets based on C++11 and STL.
-*
-*   Memory management is something to be wary of; we will store our own
-*   pointer to given packets in our buffer and will return copies of these
-*   pointers when packets are popped off the buffer.  In the case of a
-*   buffer reset, or similar activity, we will go ahead and delete any
-*   packets in our buffer at the time.
-*
-*   This implementation assumes that it is operating in a multi-threaded
-*   environment and syncronizes all operations/methods.
-*
-*   Requirements:
-*       R0: eliminate effects of jitter in RTP packet arrival
-*       R1: detect and track missing packets in RTP stream
-*       R2: allow configuration of depth and packet size (in milliseconds)
-*       R3: track and report ongoing jitter stats:
-*               dropped packets
-*               out of order packets
-*               missed packets
-*               jitter (lifetime)
-*               max jitter (lifetime)
-*               current depth
-*
-*   The RTPJitter will manage an internal buffer of RTP frames.  The application
-*   layer adds and removes packets from this buffer though the .push() and
-*   .pop() interface.  It is up to the application to manage and schedule this
-*   process on its own thread.
-*
-*   A jitter buffer introduces a configured delay in the delivery and
-*   processing of packets; this is the "depth" in milliseconds of the buffer.
-*   Once the first packet is received into an empty buffer, the "depth" timer
-*   starts.  Once it expires, packets will be delivered upon request in the
-*   .pop() function until the buffer becomes empty again.
-*
-*   The remaining logic involves how to handle newly arriving packets and
-*   handle the exception cases: missing or out-of-order packets.  ... and how
-*   to detect and address jitter.
-*
-*   Jitter will be calculated as the mean deviation from the expected based on
-*   details, definitions, and sample code from RFC3550 section 6.4.1 and
-*   Appendix A.8.
-*
-*   The jitter buffer will not examine, or differentiate, packets based on SSRC.
-*
-*
-*   note 1 - we use a std::deque to implement the internal buffer because it
-*       allows us to ignore the details of memory management for the buffer
-*       as it may grow and shrink.
-*
 ******************************************************************************/
 
 #ifndef RTP_JITTER_H_cc8e302e_b008_4588_a29a_79a9f555804d

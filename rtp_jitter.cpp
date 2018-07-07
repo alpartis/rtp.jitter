@@ -130,6 +130,12 @@ RTPJitter::RESULT RTPJitter::push(rawrtp_ptr p)
         // TODO: sequence numbers are only 16 bits and will wrap around
         //  fairly often.  We need to be sure we're not naive here.
 
+        // TODO: there's a problem here: when sequence numbers wrap around,
+        //  if either the max_int one, or the zero one, go missing, then
+        //  we will not recover (subsequent packets will be dropped as "bad")
+        //  until the sequence numbers wrap around AGAIN and one of those
+        //  packets are NOT dropped a second time.
+
         if ((rtp_sequence >= _last_buf_sequence)
          || ((rtp_sequence == 0) && (_last_buf_sequence == UINT16_MAX))
          || (_last_pop_sequence == _first_buf_sequence))
