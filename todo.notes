@@ -1,0 +1,17 @@
+- ensure there are no crazy/hybrid RTP packet dependencies
+- refimpl: RTPChannel - write to rtpfiles
+- refimpl: UDPSocket
+- test with RTP PTT app over network
+- refimpl: rtpfile player
+- update design slides
+
+
+06jul18
+    - update README with design description
+
+23mar15
+    - set up makefile and clean compile
+    - commit/push upstream
+
+        $ git commit -m '...'
+        $ git push
