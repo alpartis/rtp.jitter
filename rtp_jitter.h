@@ -71,6 +71,12 @@ private:
     static const int DEFAULT_BUFFER_ELEMENTS = 18;  // 360ms given 20ms packets
     static const int DEFAULT_MS_PER_PACKET   = 20;
 
+    // TODO: there should be no need for a recursive mutex unless there
+    //  is a possibility of a single thread calling one function from
+    //  another where it will attempt to get the lock twice, but I don't
+    //  think such a case exists.  Certainly there are probably 2 threads
+    //  accessing an instance of this class i.e. packets are pushed in
+    //  from a socket thread and popped off by an application thread.
     std::recursive_mutex    _mutex;
     std::deque<rawrtp_ptr>  _buffer;
     unsigned                _nominal_depth_ms;      // requested buffer depth - may dynamically adjust
